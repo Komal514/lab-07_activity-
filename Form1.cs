@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Activity_1
+namespace Activity_02
 {
     public partial class Form1 : Form
     {
@@ -17,24 +17,38 @@ namespace Activity_1
             InitializeComponent();
         }
 
-        private void buttonGreet_Click(object sender, EventArgs e)
+        private void Form1_Load(object sender, EventArgs e)
         {
-            // Check if the TextBox is not empty
-            if (!string.IsNullOrWhiteSpace(textBoxname.Text))
-            {
-                // Update the label with a personalized greeting message
-                labelMessage.Text = $"Hello, {textBoxname.Text}! Welcome!";
-            }
-            else
-            {
-                // Prompt the user to enter their name
-                labelMessage.Text = "Please enter your name.";
-            }
+
         }
 
-        private void textBoxname_TextChanged(object sender, EventArgs e)
+        private void comboBoxSize_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // Adding items to the ComboBox
+            comboBoxSize.Items.Add("Small");
+            comboBoxSize.Items.Add("Medium");
+            comboBoxSize.Items.Add("Large");
+        }
 
+        private void buttonPlaceOrder_Click(object sender, EventArgs e)
+        {
+            StringBuilder toppings = new StringBuilder("Toppings: ");
+            if (checkBoxCheese.Checked) toppings.Append("Cheese, ");
+            if (checkBoxPepperoni.Checked) toppings.Append("Pepperoni, ");
+            if (checkBoxMushrooms.Checked) toppings.Append("Mushrooms, ");
+            if (toppings.ToString() == "Toppings: ") toppings.Append("None");
+
+            // Gather selected crust type
+            string crustType = radioButtonThinCrust.Checked ? "Thin Crust" :
+                               radioButtonThickCrust.Checked ? "Thick Crust" :
+                               "Not selected";
+
+            // Create the order summary
+            string orderSummary = $"Pizza Size: {comboBoxSize}\n{toppings.ToString().TrimEnd(',', ' ')}\nCrust Type: {crustType}";
+
+            // Display the order summary in the label
+            label1.Text = orderSummary;
         }
     }
 }
+      
